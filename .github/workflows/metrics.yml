@@ -1,0 +1,32 @@
+name: Metrics
+
+on:
+  # Update once a day
+  schedule:
+    - cron: "0 0 * * *"
+  # Optional: update when pushing to main
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          # Where to save the SVG in your repo
+          filename: metrics.isocalendar.svg
+
+          # Your token (from secrets)
+          token: ${{ secrets.METRICS_TOKEN }}
+
+          # Disable base cards, only use plugin
+          base: ""
+
+          # Isometric commit calendar plugin
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
